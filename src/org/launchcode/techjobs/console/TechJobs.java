@@ -1,8 +1,7 @@
 package org.launchcode.techjobs.console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.awt.*;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -61,7 +60,7 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue((searchTerm)));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -110,7 +109,22 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-
-        System.out.println("printJobs is not implemented yet");
+        //create a variable to add to for search terms
+        StringBuilder print = new StringBuilder();
+        //create a loop iterating create a new section for each item found for the term searched
+        for(HashMap<String, String> job: someJobs) {
+            print.append("******\n");
+            //create a loop iterating though each key value pair found corresponding with the search term
+            for(Map.Entry<String, String> entry: job.entrySet()){
+                print.append(entry.getKey() + ": " + entry.getValue() + "\n");
+            }
+            print.append("******\n");
+        }
+        //create an if statement to see if search is valid
+        if (print.length() != 0) {
+            System.out.println(print.toString());
+        } else {
+            System.out.println("\nSearch term not found in database. Please enter a different search term.");
+        }
     }
 }
